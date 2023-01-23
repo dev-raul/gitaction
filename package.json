@@ -12,8 +12,15 @@
     "check-lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-firebase/analytics": "^16.5.1",
+    "@react-native-firebase/app": "^16.5.1",
+    "@react-native-firebase/crashlytics": "^16.5.1",
+    "jail-monkey": "^2.8.0",
+    "obfuscator-io-metro-plugin": "^2.1.1",
     "react": "18.1.0",
-    "react-native": "0.70.6"
+    "react-native": "0.70.6",
+    "react-native-config": "^1.5.0",
+    "react-native-exit-app": "^1.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

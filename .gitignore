@@ -31,6 +31,9 @@ local.properties
 *.iml
 *.hprof
 .cxx/
+dist
+.jso
+*google-services.json
 
 # node.js
 #
@@ -43,6 +46,8 @@ buck-out/
 \.buckd/
 *.keystore
 !debug.keystore
+.env**
+!.env.example
 
 # fastlane
 #
