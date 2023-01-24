@@ -43,7 +43,7 @@ jobs:
         run: npx jetifier
       - name: Build
         run: cd android && ./gradlew app:assembleRelease
-      - name: Fetch credential file
+      - name: Fetch Firebase Credential File
         uses: ./.github/actions/base64-to-file
         with:
           secret: ${{ secrets.HML_CREDENTIAL_FILE_CONTENT }}
