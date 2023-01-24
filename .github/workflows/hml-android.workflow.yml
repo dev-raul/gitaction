@@ -25,7 +25,7 @@ jobs:
           envkey_ENVIRONMENT: HOMOLOG
           file_name: .env
       - name: Prepare Secure Build
-        run: bash secure-build-creator.sh -platform android -ANDROID_KEYSTORE '${{ secrets.ANDROID_KEYSTORE }}' -GSjson '${{ secrets.HML_GOOGLE_SERVICES_JSON }}' -FCjson ${{ secrets.HML_CREDENTIAL_FILE_CONTENT }} -ENV homolog
+        run: bash secure-build-creator.sh -platform android -ANDROID_KEYSTORE '${{ secrets.ANDROID_KEYSTORE }}' -GSjson '${{ secrets.HML_GOOGLE_SERVICES_JSON }}' -FCjson '${{ secrets.HML_CREDENTIAL_FILE_CONTENT }}' -ENV homolog
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
