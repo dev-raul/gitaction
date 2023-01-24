@@ -20,8 +20,6 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - run: echo ${{ inputs.secret }} > ./${{ inputs.filename }}.tmp
-      shell: bash
     - run: base64 -d -i ./${{ inputs.filename }}.tmp > ./${{ inputs.filename }}
       shell: bash
     - run: rm ./${{ inputs.filename }}.tmp
