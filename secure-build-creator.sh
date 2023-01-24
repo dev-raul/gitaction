@@ -28,11 +28,17 @@ function check_set_android_configs () {
     echo "${ERROR_COLOR} release.keystore was not setted${NC}"
   fi
 
-  # Check if Android keystore file is setted
+  # Check if Google services file is setted
   GOOGLE_SERVICES_JSON_PATH="./android/app/google-services.json"
   if [ ! -f "$GOOGLE_SERVICES_JSON_PATH" ]; then
     hasError=true
     echo "${ERROR_COLOR} google-services.json was not setted${NC}"
+  fi
+  # Check if Firebase Credentials file is setted
+  CREDENTIAL_FIREBASE_JSON_PATH="./android/app/credential_file.json"
+  if [ ! -f "$CREDENTIAL_FIREBASE_JSON_PATH" ]; then
+    hasError=true
+    echo "${ERROR_COLOR} credential_file.json was not setted${NC}"
   fi
 
   if $hasError
@@ -48,6 +54,9 @@ function set_android_configs () {
   # Set keystore
   cp ./workdir/release.keystore ./android/app
 
+  # Set keystore
+  cp ./workdir/credential_file.json ./android/app
+
   # Set google-services configs
   cp ./workdir/google-services.json ./android/app
 }
@@ -59,6 +68,12 @@ function check_generate_android_files_result () {
     echo "Error: ${ERROR_COLOR}google-services.json not created${NC}"
     hasError=true
   fi
+
+  if [ ! -f "./workdir/credential_file.json" ]; then
+    echo "Error: ${ERROR_COLOR}credential_file.json not created${NC}"
+    hasError=true
+  fi
+
   if [ ! -f "./workdir/release.keystore" ]; then
     echo "Error: ${ERROR_COLOR}release.keystore not created${NC}"
     hasError=true
@@ -78,6 +93,7 @@ function generate_android_files () {
   mkdir -p ./workdir
   echo $ANDROID_KEYSTORE | base64 --decode > ./workdir/release.keystore
   echo "$GSjson" >> ./workdir/google-services.json
+  echo "$FCjson" >> ./workdir/credential_file.json
 }
 
 function check_set_ios_configs () {
@@ -238,6 +254,7 @@ function validate_android_mixed_params () {
 
   if [ ! "${ANDROID_KEYSTORE:-}" ]; then is_valid_mix=false;fi
   if [ ! "${GSjson:-}" ]; then is_valid_mix=false;fi
+  if [ ! "${FCjson:-}" ]; then is_valid_mix=false;fi
 
   if [ $is_valid_mix = false ]
   then
@@ -290,6 +307,13 @@ function validate_android_single_args () {
   if [[ `echo -n $gservicejson | wc -m` -lt 14 ]];
   then
     echo "${ERROR_COLOR}google-services.json${NC} is an ${ERROR_COLOR}invalid${NC} file"
+    exit 1
+  fi
+  # VALIDATE Google Services json
+  fcervicejson=$(echo "$FCjson" | grep -o '"current_key": *"[^"]*' | grep -o '[^"]*$')
+  if [[ `echo -n $fcervicejson | wc -m` -lt 14 ]];
+  then
+    echo "${ERROR_COLOR}google-credential_file.json${NC} is an ${ERROR_COLOR}invalid${NC} file"
     exit 1
   fi
 }

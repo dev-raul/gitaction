@@ -34,6 +34,7 @@ local.properties
 dist
 .jso
 *google-services.json
+credential_file.json
 
 # node.js
 #

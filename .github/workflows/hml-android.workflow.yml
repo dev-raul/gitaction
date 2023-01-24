@@ -25,7 +25,7 @@ jobs:
           envkey_ENVIRONMENT: HOMOLOG
           file_name: .env
       - name: Prepare Secure Build
-        run: bash secure-build-creator.sh -platform android -ANDROID_KEYSTORE '${{ secrets.ANDROID_KEYSTORE }}' -GSjson '${{ secrets.HML_GOOGLE_SERVICES_JSON }}' -ENV homolog
+        run: bash secure-build-creator.sh -platform android -ANDROID_KEYSTORE '${{ secrets.ANDROID_KEYSTORE }}' -GSjson '${{ secrets.HML_GOOGLE_SERVICES_JSON }}' -FCjson ${{ secrets.HML_CREDENTIAL_FILE_CONTENT }} -ENV homolog
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -43,16 +43,10 @@ jobs:
         run: npx jetifier
       - name: Build
         run: cd android && ./gradlew app:assembleRelease
-      - name: Fetch Firebase Credential File
-        uses: ./.github/actions/base64-to-file
-        with:
-          secret: ${{ secrets.HML_CREDENTIAL_FILE_CONTENT }}
-          filename: credential_file.json
-          destination-path: $GITHUB_WORKSPACE/Firebase-Distribution-Github-Action/
       - name: Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1.3.3
         with:
           appId: ${{ secrets.HML_FIREBASE_APP_ID_ANDROID }}
-          serviceCredentialsFileContent: Firebase-Distribution-Github-Action/credential_file.json
+          serviceCredentialsFileContent: ./android/app/credential_file.json
           groups: testraul
           file: android/app/build/outputs/apk/release/app-release.apk
