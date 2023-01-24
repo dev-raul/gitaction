@@ -48,5 +48,5 @@ jobs:
         with:
           appId: ${{ secrets.HML_FIREBASE_APP_ID_ANDROID }}
           serviceCredentialsFileContent: ${{ secrets.HML_CREDENTIAL_FILE_CONTENT }}
-          groups: PB
+          groups: testraul
           file: android/app/build/outputs/apk/release/app-release.apk
