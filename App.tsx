@@ -34,7 +34,7 @@ const App = () => {
       />
       <View style={[styles.container, {backgroundColor}]}>
         <Text style={[styles.title, {color}]}>
-          {Config.ENVIRONMENT} GitHub Action
+          {Config.ENVIRONMENT} GitHub Action By dev-raul 👨🏾‍💻
         </Text>
       </View>
     </>
