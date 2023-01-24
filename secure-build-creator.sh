@@ -202,6 +202,9 @@ while [ $# -gt 0 ]; do
     -GSjson)
       GSjson="$2"
       ;;
+    -FCjson)
+      FCjson="$2"
+      ;;
     -ENV)
       ENV="$2"
       ;;
@@ -218,8 +221,9 @@ while [ $# -gt 0 ]; do
       echo ""
       echo "            android: Requires that next params most to be: ${SUCCESS_COLOR}-ANDROID_KEYSTORE${NC} (*.keystore file content encoded in base64)"
       echo "                                                           ${SUCCESS_COLOR}-GSjson${NC} (google-services.json file content downloaded from firebase app distribution)"
+      echo "                                                           ${SUCCESS_COLOR}-FCjson${NC} (credential_file.json file content downloaded from google account)"
       echo "            env: homolog or production"
-      echo "example (osx): sh ./script_file_name.sh -platform android -DECRYPT_KEY 'abcdefghi' -GSjson 'jklmnopqrstu' "
+      echo "example (osx): sh ./script_file_name.sh -platform android -DECRYPT_KEY 'abcdefghi' -GSjson 'jklmnopqrstu' -FCjson 'dwqdqdqd'"
       echo "Created by Miticous - https://github.com/miticous - with 💚 ${ERROR_COLOR}4${NC} ${SUCCESS_COLOR}GO.K${NC}"
       exit 0
       ;;
@@ -310,7 +314,7 @@ function validate_android_single_args () {
     exit 1
   fi
   # VALIDATE Google Services json
-  fcervicejson=$(echo "$FCjson" | grep -o '"current_key": *"[^"]*' | grep -o '[^"]*$')
+  fcervicejson=$(echo "$FCjson" | grep -o '"project_id": *"[^"]*' | grep -o '[^"]*$')
   if [[ `echo -n $fcervicejson | wc -m` -lt 14 ]];
   then
     echo "${ERROR_COLOR}google-credential_file.json${NC} is an ${ERROR_COLOR}invalid${NC} file"
