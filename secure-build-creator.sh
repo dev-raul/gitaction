@@ -314,8 +314,7 @@ function validate_android_single_args () {
     exit 1
   fi
   # VALIDATE Google Services json
-  fcervicejson=$(echo "$FCjson" | grep -o '"project_id": *"[^"]*' | grep -o '[^"]*$')
-  if [[ `echo -n $fcervicejson | wc -m` -lt 14 ]];
+  if [[ $(echo "$FCjson" | grep -c "project_id") -eq 0 ]];
   then
     echo "${ERROR_COLOR}google-credential_file.json${NC} is an ${ERROR_COLOR}invalid${NC} file"
     exit 1
